@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>comics_datas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        新增漫畫
+    </button>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">新增漫畫</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            請輸入漫畫ID (從漫畫網址取得 ex：https://m.manhuagui.com/comic/33643/625126.html#p=21)，comic 後方 33643 即為漫畫 id
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <form method = 'post' name = 'insert' action = "{{ url_for('insert') }}">
+                <p>輸入漫畫ID： <input type='text' name='comics_id' /></p>
+                <button type="submit" class="btn btn-primary">新增</button>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <tr>
+            <th scope="col">comics_id</th>
+            <th scope="col">name</th>
+            <th scope="col">episode</th>
+            <th scope="col">url</th>
+            <th scope="col">updated_at</th>
+            <th scope="col">edit</th>
+        </tr>
+        {% for comics_data in comics_datas %}
+            <tr>
+                <td> {{ comics_data[1] }} </td>
+                <td> {{ comics_data[2] }} </td>
+                <td> {{ comics_data[3] }} </td>
+                <td> <a href = '{{ comics_data[6] }}'>{{ comics_data[6] }} </a></td>
+                <td> {{ comics_data[5] }} </td>
+                <td>
+                    <a href = "/delete/{{comics_data[1]}}" class = "btn btn-primary" onclick="return del()">刪除</a> 
+                <td>
+            </tr>
+        {% endfor %}
+    </table>
+    <script>
+        function del(){ 
+            if(!confirm("確認要刪除？")){ 
+                window.event.returnValue = false;
+                } 
+            }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>
